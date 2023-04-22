@@ -1,0 +1,79 @@
+[project]
+name = "ComplexSocialSystems"
+description = "Complex Social Systems"
+version = "0.1.0"
+authors = [
+    {name = "Vladyslav Fedoriuk", email="vlad.fedoriuk2000@gmail.com"}
+]
+dependencies = [
+    "osmnx",
+]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+dev = [
+    "jupyter",
+    "black[jupyter]",
+    "ruff",
+    "isort",
+    "pydocstyle[toml]",
+    "pyupgrade",
+    "pre-commit",
+    "pip-tools",
+]
+
+[tool.black]
+line-length = 88
+target_version = ['py310']
+include = '\.pyi?$'
+force-exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | \.ipynb_checkpoints
+    | \.egg-info
+    | _build
+    | buck-out
+    | build
+    | dist
+    | cache
+    | wandb
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+
+[tool.pydocstyle]
+convention = "numpy"
+
+[tool.ruff]
+line-length = 88
+target-version = 'py310'
+required-version = "0.0.262"
+extend-select = [
+    "D", # pydocstyle
+    "UP", # pyupgrade
+    "B", # flake8-bugbear
+    "ANN", # flake8-annotations
+    "S", # flake8-bandit
+    "C", # flake8-comprehensions
+    "T", # flake8-debugger
+    "INP", # flake8-no-pep420
+    "ERA", # eradicate
+    "PD", # pandas-vet
+    "NPY", # numpy-specific rules
+    "Q", # flake8-quotes
+]
+src = [
+    "src",
+]
+[tool.ruff.pydocstyle]
+convention = "numpy"
