@@ -29,6 +29,8 @@ black[jupyter]==23.3.0
     # via ComplexSocialSystems (pyproject.toml)
 bleach==6.0.0
     # via nbconvert
+branca==0.6.0
+    # via folium
 build==0.10.0
     # via pip-tools
 certifi==2022.12.7
@@ -75,6 +77,8 @@ filelock==3.12.0
     # via virtualenv
 fiona==1.9.3
     # via geopandas
+folium==0.14.0
+    # via ComplexSocialSystems (pyproject.toml)
 fonttools==4.39.3
     # via matplotlib
 fqdn==1.5.1
@@ -117,10 +121,14 @@ jedi==0.18.2
     # via ipython
 jinja2==3.1.2
     # via
+    #   branca
+    #   folium
     #   jupyter-server
     #   nbclassic
     #   nbconvert
     #   notebook
+joblib==1.2.0
+    # via scikit-learn
 jsonpointer==2.3
     # via jsonschema
 jsonschema[format-nongpl]==4.17.3
@@ -171,11 +179,15 @@ markupsafe==2.1.2
     #   jinja2
     #   nbconvert
 matplotlib==3.7.1
-    # via osmnx
+    # via
+    #   matplotx
+    #   osmnx
 matplotlib-inline==0.1.6
     # via
     #   ipykernel
     #   ipython
+matplotx[all]==0.3.10
+    # via ComplexSocialSystems (pyproject.toml)
 mistune==2.0.5
     # via nbconvert
 munch==2.5.0
@@ -205,7 +217,9 @@ nest-asyncio==1.5.6
     #   nbclassic
     #   notebook
 networkx==3.1
-    # via osmnx
+    # via
+    #   matplotx
+    #   osmnx
 nodeenv==1.7.0
     # via pre-commit
 notebook==6.5.4
@@ -215,9 +229,13 @@ notebook-shim==0.2.2
 numpy==1.24.2
     # via
     #   contourpy
+    #   folium
     #   matplotlib
+    #   matplotx
     #   osmnx
     #   pandas
+    #   scikit-learn
+    #   scipy
 osmnx==1.2.2
     # via
     #   ComplexSocialSystems (pyproject.toml)
@@ -289,6 +307,8 @@ pygments==2.15.1
     #   qtconsole
 pyparsing==3.0.9
     # via matplotlib
+pypng==0.20220715.0
+    # via matplotx
 pyproj==3.5.0
     # via
     #   geopandas
@@ -328,7 +348,9 @@ qtconsole==5.4.2
 qtpy==2.3.1
     # via qtconsole
 requests==2.28.2
-    # via osmnx
+    # via
+    #   folium
+    #   osmnx
 rfc3339-validator==0.1.4
     # via
     #   jsonschema
@@ -341,6 +363,12 @@ rtree==1.0.1
     # via osmnx
 ruff==0.0.262
     # via ComplexSocialSystems (pyproject.toml)
+scikit-learn==1.2.2
+    # via ComplexSocialSystems (pyproject.toml)
+scipy==1.10.1
+    # via
+    #   matplotx
+    #   scikit-learn
 send2trash==1.8.0
     # via
     #   jupyter-server
@@ -372,6 +400,8 @@ terminado==0.17.1
     #   jupyter-server-terminals
     #   nbclassic
     #   notebook
+threadpoolctl==3.1.0
+    # via scikit-learn
 tinycss2==1.2.1
     # via nbconvert
 tokenize-rt==5.0.0
@@ -392,6 +422,8 @@ tornado==6.3.1
     #   nbclassic
     #   notebook
     #   terminado
+tqdm==4.65.0
+    # via ComplexSocialSystems (pyproject.toml)
 traitlets==5.9.0
     # via
     #   comm
