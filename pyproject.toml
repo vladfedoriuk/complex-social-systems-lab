@@ -24,7 +24,10 @@ dev = [
     "pre-commit",
     "pip-tools",
     "tqdm",
+    "matplotlib",
     "matplotx[all]",
+    "seaborn",
+    "plotly",
 ]
 
 [tool.black]
