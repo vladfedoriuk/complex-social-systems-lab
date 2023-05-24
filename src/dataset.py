@@ -16,6 +16,8 @@ CITIES_GRAPHS_PATH.mkdir(parents=True, exist_ok=True)
 
 PROCESSED_DATASET_PATH = DATASET_PATH / "processed"
 
+PROCESSED_DATASET_PATH.mkdir(parents=True, exist_ok=True)
+
 
 def load_dataset() -> gpd.GeoDataFrame:
     """
