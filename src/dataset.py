@@ -1,4 +1,6 @@
 """The dataset related data processing logic."""
+import functools
+from collections.abc import Callable
 from contextlib import suppress
 from pathlib import Path
 
@@ -120,6 +122,28 @@ def iterate_over_downloaded_cities_graphs() -> nx.MultiDiGraph:
         )
 
 
+def mark_corrupt_cities_graphs(
+    func: Callable[[nx.MultiDiGraph, dict], dict]
+) -> Callable[[nx.MultiDiGraph, dict], dict]:
+    """
+    Mark the corrupt cities graphs.
+
+    :param func: The function to decorate.
+    :return: The decorated function.
+    """
+
+    @functools.wraps(func)
+    def wrapper(graph: nx.MultiDiGraph, metadata: dict) -> dict:
+        try:
+            return func(graph, metadata)
+        except Exception:
+            metadata["corrupt"] = True
+            return metadata
+
+    return wrapper
+
+
+@mark_corrupt_cities_graphs
 def calculate_metrics_for_city_graph(graph: nx.MultiDiGraph, metadata: dict) -> dict:
     """
     Calculate the metrics for a city graph.
@@ -161,7 +185,13 @@ def create_stats_df_for_downloaded_cities_graphs() -> pd.DataFrame:
         calculate_metrics_for_city_graph(graph, metadata)
         for graph, metadata in tqdm(iterate_over_downloaded_cities_graphs())
     ]
-    return pd.DataFrame(stats).set_index("geoname_id")
+    stats_df = pd.DataFrame(stats)
+    if "corrupt" not in stats_df.columns:
+        stats_df.loc[:, "corrupt"] = False
+    stats_df.loc[:, "corrupt"] = stats_df["corrupt"].fillna(False)
+    stats_df = stats_df[stats_df["corrupt"] == False]  # noqa: E712
+    stats_df = stats_df.drop(columns=["corrupt"])
+    return stats_df.set_index("geoname_id")
 
 
 def save_stats_df_for_downloaded_cities_graphs(stats_df: pd.DataFrame) -> None:
@@ -180,3 +210,8 @@ def load_processed_dataset() -> pd.DataFrame:
     :return: The processed dataset.
     """
     return pd.read_csv(PROCESSED_DATASET_PATH / "stats.csv", index_col="geoname_id")
+
+
+if __name__ == "__main__":
+    stats_df = create_stats_df_for_downloaded_cities_graphs()
+    save_stats_df_for_downloaded_cities_graphs(stats_df)
